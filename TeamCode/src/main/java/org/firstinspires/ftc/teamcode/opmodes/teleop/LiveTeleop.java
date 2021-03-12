@@ -102,7 +102,7 @@ public class LiveTeleop extends LiveTeleopBase {
 
         if(gamepad2.left_bumper){
             wobbleservo.setPosition(0.13f);
-        } else if (gamepad2.y){
+        } else { // will always be closed and will open as long as bumper is pressed
             wobbleservo.setPosition(1.0f);
         }
 
