@@ -16,13 +16,18 @@ public class LiveTeleop extends LiveTeleopBase {
     private DcMotor LFDrive;
     private DcMotor LBDrive;
 
+    private DcMotor dclift;
+
     private DcMotor flywheel;
     private DcMotor intake;
     private Servo lift;
+    private Servo SCLift;
 
     private Servo cage;
-    private Servo cagelift;
+
     private Servo wobbleservo;
+
+    private Servo sideWClaw;
 
     @Override
     public void on_init() {
@@ -36,16 +41,24 @@ public class LiveTeleop extends LiveTeleopBase {
 
         flywheel = hardwareMap.get(DcMotor.class,"flywheel");
         intake = hardwareMap.get(DcMotor.class, "intake");
+
         lift = hardwareMap.get(Servo.class, "lift");
+
+        SCLift = hardwareMap.get(Servo.class, "sclift");
+
 
         RFDrive = hardwareMap.get(DcMotor.class, "rf");
         RBDrive = hardwareMap.get(DcMotor.class, "rb");
         LFDrive = hardwareMap.get(DcMotor.class, "lf");
         LBDrive = hardwareMap.get(DcMotor.class, "lb");
 
+        dclift = hardwareMap.get(DcMotor.class," dclift");
+
         cage = hardwareMap.get(Servo.class, "cage");
-        cagelift = hardwareMap.get(Servo.class, "cagelift");
+
         wobbleservo = hardwareMap.get(Servo.class, "wobbleservo");
+
+        sideWClaw = hardwareMap.get(Servo.class, "scgrab");
 
         flywheel.setDirection(DcMotor.Direction.FORWARD);
 
@@ -53,13 +66,17 @@ public class LiveTeleop extends LiveTeleopBase {
         LBDrive.setDirection(DcMotor.Direction.REVERSE);
 
         wobbleservo.setDirection(Servo.Direction.REVERSE);
+
         lift.setDirection(Servo.Direction.REVERSE);
+        sideWClaw.setDirection(Servo.Direction.REVERSE);
+        SCLift.setDirection(Servo.Direction.REVERSE);
 
         RFDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         LFDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         RBDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         LBDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        dclift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
     }
@@ -68,6 +85,23 @@ public class LiveTeleop extends LiveTeleopBase {
     public void on_loop() {
         ElapsedTime elapsedtimer = new ElapsedTime();
 
+        double xLength = robot.drive_train.get_X() - (-12); //Get the base length of the Triangle
+        double theta = Math.atan(60/xLength); //Find theta from the x value of the robots position
+        double compTheta = (Math.PI/2) - theta; //Use the complementary angle
+        double PosXTurnRadians = Math.PI-compTheta; //Change directions based on if its on the left side or right side of the high goal
+        double NegXTurnRadians = Math.PI+compTheta; //" "
+
+        if(gamepad1.dpad_down){
+            if(xLength>0){
+                //Turn Clockwise by turnRadians
+                robot.drive_train.odo_move(robot.drive_train.get_X(), robot.drive_train.get_Y(), PosXTurnRadians, 1.0, 1, Math.PI/180);
+            }else if(xLength<0){
+                //Turn Counter Clockwise by turnRadians
+                robot.drive_train.odo_move(robot.drive_train.get_X(), robot.drive_train.get_Y(), NegXTurnRadians, 1.0, 1, Math.PI/180);
+            } else{
+                robot.drive_train.odo_move(robot.drive_train.get_X(), robot.drive_train.get_Y(), Math.PI, 1.0, 1, Math.PI/180);
+            }
+        }
 
 
         double flywheelpower = 0;
@@ -85,25 +119,32 @@ public class LiveTeleop extends LiveTeleopBase {
 
         double intakePower = gamepad2.left_trigger-gamepad2.right_trigger;
 
+        double dcliftPower = -gamepad2.left_stick_y;
+        double dcextraPower = -gamepad2.right_stick_y;
 
 
-        if(gamepad2.right_bumper) {
-            cage.setPosition(0.0f);
-        } else {
-            cage.setPosition(0.35f);
+
+        while(gamepad2.right_bumper){
+                cage.setPosition(0.185f);//close
+                sleep(410); // give time to go to position
+                cage.setPosition(0.35f);//open
+                sleep(410);
         }
 
-        if(gamepad2.b){
-            cagelift.setPosition(1.0f);
-        } else if(gamepad2.a){
-            cagelift.setPosition(0.7f);
-        }
-        // I am also Sai
+
+
+//        if(gamepad2.right_bumper) {
+//            cage.setPosition(0.0f);
+//        } else {
+//            cage.setPosition(0.35f);
+//        }
+
+
 
         if(gamepad2.left_bumper){
-            wobbleservo.setPosition(0.13f);
+            wobbleservo.setPosition(0.0f);
         } else { // will always be closed and will open as long as bumper is pressed
-            wobbleservo.setPosition(1.0f);
+            wobbleservo.setPosition(0.4f);
         }
 
         if(gamepad2.dpad_up) {
@@ -114,10 +155,28 @@ public class LiveTeleop extends LiveTeleopBase {
             lift.setPosition(0.35);
         }
 
+        if(gamepad1.dpad_left) {
+            SCLift.setPosition(1.0f);
+        } else if(gamepad1.dpad_right) {
+            SCLift.setPosition(0.3f);
+        }
+
+
+
+        if(gamepad2.a) {
+            sideWClaw.setPosition(0.8);
+        } else if (gamepad2.b){
+            sideWClaw.setPosition(0.0);
+        }
+
 
 
         flywheel.setPower(flywheelpower);
         intake.setPower(intakePower);
+
+        dclift.setPower(dcliftPower);
+        dclift.setPower(dcextraPower);
+
 
         telemetry.addData("Wobble Grab Power: ", gamepad2.left_bumper);
         telemetry.addData("Flywheel Speed: ", flywheelpower);
@@ -140,9 +199,10 @@ public class LiveTeleop extends LiveTeleopBase {
 
         }
 
-        if(gamepad1.dpad_up){
-            robot.drive_train.odo_move(-12, -2, Math.PI, 1, 1, Math.PI/360);
-        }
+//        if(gamepad1.dpad_up){
+//            robot.drive_train.odo_move(-9, -6, Math.PI, 1, 1, Math.PI/180);
+//        }
+
 
 
 

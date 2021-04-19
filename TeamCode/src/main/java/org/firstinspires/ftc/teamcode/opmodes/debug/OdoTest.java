@@ -33,7 +33,13 @@ public class OdoTest extends LinearOpMode {
 
 //        robot.drive_train.odo_move(0, 48, 0, 1, -1, -1);
 
-        robot.drive_train.odo_move(0, 0, Math.PI/4, 1, -1, Math.PI/60.0);
+        //robot.drive_train.odo_move(0, 0, Math.PI/4, 1, -1, Math.PI/60.0);
+
+        robot.wobble.downWobble(true);
+        robot.drive_train.odo_move(robot.drive_train.get_X() + 3, robot.drive_train.get_Y(), robot.drive_train.get_A(), 1, 2, Math.PI/360);
+        robot.wobble.openWobbleServo(true);
+        robot.drive_train.odo_move(robot.drive_train.get_X() + 3, robot.drive_train.get_Y(), robot.drive_train.get_A(), 1, 2, Math.PI/360);
+        robot.wobble.closeWobbleServo(true);
 
 
         robot.shutdown();
