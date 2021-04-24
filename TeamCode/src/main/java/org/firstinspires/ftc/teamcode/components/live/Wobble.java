@@ -86,7 +86,7 @@ public class Wobble extends Component {
     }
 
     public void SecondWobbleClose(boolean wait){
-        wait = Math.abs(sideWClaw.getPosition() - WobbleConfig.SECOND_WOBBLE_HOLD) > SERVO_POS_ERROR_BOUNDARY;
+        wait = wait && Math.abs(sideWClaw.getPosition() - WobbleConfig.SECOND_WOBBLE_HOLD) > SERVO_POS_ERROR_BOUNDARY;
         sideWClaw.setPosition(WobbleConfig.SECOND_WOBBLE_HOLD);
         while(wait && isOpmodeActive() && Math.abs(sideWClaw.getPosition() - WobbleConfig.SECOND_WOBBLE_HOLD) > SERVO_POS_ERROR_BOUNDARY) {
             sideWClaw.setPosition(WobbleConfig.SECOND_WOBBLE_HOLD);
@@ -161,7 +161,7 @@ public class Wobble extends Component {
     }
 
     public void SecondWobbleUp(boolean wait){
-        wait = Math.abs(SCLift.getPosition() - WobbleConfig.SECOND_LIFT_UP) > SERVO_POS_ERROR_BOUNDARY;
+        wait = wait && Math.abs(SCLift.getPosition() - WobbleConfig.SECOND_LIFT_UP) > SERVO_POS_ERROR_BOUNDARY;
         SCLift.setPosition(WobbleConfig.SECOND_LIFT_UP);
         while(wait && isOpmodeActive() && Math.abs(SCLift.getPosition() - WobbleConfig.SECOND_LIFT_UP) > SERVO_POS_ERROR_BOUNDARY) {
             SCLift.setPosition(WobbleConfig.SECOND_LIFT_UP);
@@ -187,7 +187,7 @@ public class Wobble extends Component {
         }
     }
     public void downWobble(boolean wait){
-        wait = Math.abs(lift.getPosition() - WobbleConfig.LIFT_DOWN_POS) > SERVO_POS_ERROR_BOUNDARY;
+        wait = wait && Math.abs(lift.getPosition() - WobbleConfig.LIFT_DOWN_POS) > SERVO_POS_ERROR_BOUNDARY;
         lift.setPosition(WobbleConfig.LIFT_DOWN_POS);
         while(wait && isOpmodeActive() && Math.abs(lift.getPosition() - WobbleConfig.LIFT_DOWN_POS) > SERVO_POS_ERROR_BOUNDARY) {
             lift.setPosition(WobbleConfig.LIFT_DOWN_POS);

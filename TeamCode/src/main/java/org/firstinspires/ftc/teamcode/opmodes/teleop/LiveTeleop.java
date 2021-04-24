@@ -114,7 +114,7 @@ public class LiveTeleop extends LiveTeleopBase {
         } else if(gamepad1.a){
             flywheelpower = (gamepad1.right_trigger-gamepad1.left_trigger)*0.65;
         } else {
-            flywheelpower = (gamepad1.right_trigger-gamepad1.left_trigger)*0.74;
+            flywheelpower = (gamepad1.right_trigger-gamepad1.left_trigger)*0.72;
         }
 
         double intakePower = gamepad2.left_trigger-gamepad2.right_trigger;
