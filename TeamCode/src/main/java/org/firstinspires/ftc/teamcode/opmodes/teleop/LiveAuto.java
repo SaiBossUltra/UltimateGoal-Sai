@@ -33,14 +33,18 @@ public class LiveAuto extends LiveTeleopBase {
         int pattren = robot.phone_camera.get_pattern();
         robot.phone_camera.stop_streaming();
 
-        SCWobble();
+        SCWobble(pattren);
 
         aroundRings(pattren); // move around the starting stack of rings
         gotoRectBasedOnPattren(pattren); //Travel to the correct box for the wobble
         robot.wobble.downWobble(true); // drop the wobble
         robot.wobble.openWobbleServo(true); // open the servo to let go of wobble
         //robot.wobble.dropWobble(true);
-        robot.drive_train.odo_move(robot.drive_train.get_X(), robot.drive_train.get_Y(), robot.drive_train.get_A() - ((Math.PI/180)*30), 1, distance_acc, angle_acc);
+        if(pattren == 2){
+            robot.drive_train.odo_move(robot.drive_train.get_X(), robot.drive_train.get_Y(), robot.drive_train.get_A() - ((Math.PI/180)*50), 1, distance_acc, angle_acc);
+        }else {
+            robot.drive_train.odo_move(robot.drive_train.get_X(), robot.drive_train.get_Y(), robot.drive_train.get_A() - ((Math.PI / 180) * 35), 1, distance_acc, angle_acc);
+        }
         //robot.wobble.SecondWobbleDown(true);
         robot.wobble.dropWobble(true);
         robot.wobble.SecondWobbleOpen(true);
@@ -101,34 +105,27 @@ public class LiveAuto extends LiveTeleopBase {
     private void aroundRings(int pattren) {
         robot.drive_train.odo_move(-27.5, robot.drive_train.get_Y(), Math.PI, 1, distance_acc, angle_acc);
     }
-    private void SCWobble(){
+    private void SCWobble(int pattren){
         robot.wobble.closeWobbleServo(false);
         robot.drive_train.odo_move(robot.drive_train.get_X() - 7, robot.drive_train.get_Y(), robot.drive_train.get_A(), 1, distance_acc, angle_acc);
-        sleep(1000);
+        sleep(50);
         robot.drive_train.odo_move(robot.drive_train.get_X() , robot.drive_train.get_Y() + 10, robot.drive_train.get_A(), 1, distance_acc, angle_acc);
-        sleep(1000);
+        sleep(50);
         robot.wobble.downWobble(true);
-        sleep(1000);
+        sleep(50);
         robot.wobble.openWobbleServo(true);
         //robot.wobble.SimpleOpen(true);
         robot.drive_train.odo_move(robot.drive_train.get_X(), robot.drive_train.get_Y(), robot.drive_train.get_A() + Math.PI/2, 1, distance_acc, Math.PI/360);
-        sleep(1000);
-        robot.drive_train.odo_move(robot.drive_train.get_X() + 10, robot.drive_train.get_Y(), robot.drive_train.get_A(), 1, distance_acc, angle_acc);
-        sleep(1000);
+        sleep(50);
+        robot.drive_train.odo_move(robot.drive_train.get_X() + 7, robot.drive_train.get_Y(), robot.drive_train.get_A(), 1, distance_acc, angle_acc);
+        sleep(50);
         robot.wobble.closeWobbleServo(true);
-        sleep(1000);
+        sleep(50);
         robot.wobble.upWobble(true);
-        sleep(1000);
+        sleep(50);
     }
 
 
-
-    private void secondWobble(){
-        robot.wobble.middleWobbleLift(true);
-        robot.wobble.openWobbleServo(true);
-        robot.drive_train.odo_move(-6.0, -36, -0, 1, distance_acc, angle_acc);
-        robot.wobble.closeWobbleServo(true);
-    }
 
     private void shootpos(int pattren){
         if(pattren == 3){
@@ -138,7 +135,7 @@ public class LiveAuto extends LiveTeleopBase {
     }
     private void intake(int pattren){
         ElapsedTime elapsedtimer = new ElapsedTime();
-        robot.intake.setIntakePower(1);
+        robot.intake.setIntakePower(-1);
         if(pattren == 3){
             robot.drive_train.odo_move(-13, 0, robot.drive_train.get_A() + ((Math.PI/180)*4.5) , 1, distance_acc, angle_acc);
             robot.drive_train.odo_move(robot.drive_train.get_X(), -31.0, robot.drive_train.get_A(), 1, distance_acc, angle_acc);
@@ -147,7 +144,7 @@ public class LiveAuto extends LiveTeleopBase {
         }
 
 
-            robot.intake.setIntakePower(1);
+            robot.intake.setIntakePower(-1);
             if(pattren == 3){
                 //robot.drive_train.odo_move(robot.drive_train.get_X(), -25.0, robot.drive_train.get_A(), 1, distance_acc, Math.PI / 360);
                 robot.drive_train.odo_move(robot.drive_train.get_X(), -42.0, robot.drive_train.get_A(), 0.5, distance_acc, angle_acc, 4, 2.5);
