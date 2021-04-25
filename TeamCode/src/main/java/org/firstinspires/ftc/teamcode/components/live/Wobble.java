@@ -14,8 +14,8 @@ import org.firstinspires.ftc.teamcode.robots.Robot;
 
 class WobbleConfig {
 
-    public static final double HOLD_WOBBLE_POS = 0.4f;
-    public static final double OPEN_WOBBLE_POS = 0.0f;
+    public static final double HOLD_WOBBLE_POS = 1.0f;
+    public static final double OPEN_WOBBLE_POS = 0.6f;
 
     public static final double SECOND_WOBBLE_HOLD = 0.8f;
     public static final double SECOND_WOBBLE_OPEN = 0.0f;
@@ -62,7 +62,7 @@ public class Wobble extends Component {
 
 
     public void closeWobbleServo(boolean wait) {
-        wait = Math.abs(wobbleservo.getPosition() - WobbleConfig.HOLD_WOBBLE_POS) > SERVO_POS_ERROR_BOUNDARY;
+        wait = wait && Math.abs(wobbleservo.getPosition() - WobbleConfig.HOLD_WOBBLE_POS) > SERVO_POS_ERROR_BOUNDARY;
         wobbleservo.setPosition(WobbleConfig.HOLD_WOBBLE_POS);
         while(wait && isOpmodeActive() && Math.abs(wobbleservo.getPosition() - WobbleConfig.HOLD_WOBBLE_POS) > SERVO_POS_ERROR_BOUNDARY) {
             wobbleservo.setPosition(WobbleConfig.HOLD_WOBBLE_POS);
@@ -73,7 +73,7 @@ public class Wobble extends Component {
     }
 
     public void openWobbleServo(boolean wait) {
-        wait = Math.abs(wobbleservo.getPosition() - WobbleConfig.OPEN_WOBBLE_POS) > SERVO_POS_ERROR_BOUNDARY;
+        wait = wait && Math.abs(wobbleservo.getPosition() - WobbleConfig.OPEN_WOBBLE_POS) > SERVO_POS_ERROR_BOUNDARY;
         wobbleservo.setPosition(WobbleConfig.OPEN_WOBBLE_POS);
         while(wait && isOpmodeActive() && Math.abs(wobbleservo.getPosition() - WobbleConfig.OPEN_WOBBLE_POS) > SERVO_POS_ERROR_BOUNDARY) {
             wobbleservo.setPosition(WobbleConfig.OPEN_WOBBLE_POS);

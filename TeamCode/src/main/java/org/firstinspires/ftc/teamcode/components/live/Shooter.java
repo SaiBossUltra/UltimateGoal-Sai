@@ -23,12 +23,12 @@ class ShooterConfig {
 
     public static double target_speed = (INTAKE_MOTOR_MAX_COUNT_PER_SEC * 0.643); // counts per second
 
-    public static double shoot_trigger_pos = 0.0;
+    public static double shoot_trigger_pos = 0.185;
     public static double unshoot_trigger_pos = 0.35;
 
     public static double VELOCITY_ERROR = 100.0;
 }
-
+  //our old mechanism to
 public class Shooter extends Component {
 
     //// MOTORS ////
