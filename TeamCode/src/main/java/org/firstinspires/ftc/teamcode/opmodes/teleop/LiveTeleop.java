@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.opmodes.LiveTeleopBase;
 
-@TeleOp(name="Teleop Live", group="driver control")
+@TeleOp(name="Teleop Live UDontCommitAnything", group="driver control")
 //@Disabled
 public class LiveTeleop extends LiveTeleopBase {
 
@@ -112,7 +112,7 @@ public class LiveTeleop extends LiveTeleopBase {
         } else if(gamepad1.x){
             flywheelpower = (gamepad1.right_trigger-gamepad1.left_trigger)*0.68;
         } else if(gamepad1.a){
-            flywheelpower = (gamepad1.right_trigger-gamepad1.left_trigger)*0.65;
+            flywheelpower = (gamepad1.right_trigger-gamepad1.left_trigger)*0.625;
         } else {
             flywheelpower = (gamepad1.right_trigger-gamepad1.left_trigger)*0.72;
         }
@@ -124,12 +124,19 @@ public class LiveTeleop extends LiveTeleopBase {
 
 
 
-        while(gamepad2.right_bumper){
-                cage.setPosition(0.185f);//close
-                sleep(410); // give time to go to position
-                cage.setPosition(0.35f);//open
-                sleep(410);
+//        while(gamepad2.right_bumper){
+//                cage.setPosition(0.185f);//close
+//                sleep(410); // give time to go to position
+//                cage.setPosition(0.35f);//open
+//                sleep(410);
+//        }
+//
+        if(gamepad2.right_bumper){
+            cage.setPosition(0.185f);
+        } else {
+            cage.setPosition(0.35f);
         }
+
 
 
 
@@ -144,7 +151,7 @@ public class LiveTeleop extends LiveTeleopBase {
         if(gamepad2.left_bumper){
             wobbleservo.setPosition(0.6f);
         } else { // will always be closed and will open as long as bumper is pressed
-            wobbleservo.setPosition(1.0f);
+            wobbleservo.setPosition(0.96f);
         }
 
         if(gamepad2.dpad_up) {

@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.opmodes.LiveTeleopBase;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="Main Auto 70", group="autonomous")
+@Autonomous(name="Main Auto UDontCommitAnything", group="autonomous")
 //@Disabled
 public class LiveAuto extends LiveTeleopBase {
 
@@ -62,7 +62,7 @@ public class LiveAuto extends LiveTeleopBase {
         }
 
         if(pattren == 3) { // seperate shooting positions for 4-ring auto and the other set ups
-            robot.drive_train.odo_move(-9, -2, Math.PI, 1, distance_acc, angle_acc);
+            robot.drive_train.odo_move(-13, -2, Math.PI, 1, distance_acc, angle_acc);
         } else if (pattren == 2) {
             robot.drive_train.odo_move(-9, 0, Math.PI - ((Math.PI/180)*10), 1, distance_acc, angle_acc); // shooting position for 1-ring auto
         } else {
@@ -73,11 +73,11 @@ public class LiveAuto extends LiveTeleopBase {
         if(!isOpmodeActive()) return;
         //robot.drive_train.odo_move(robot.drive_train.get_X(), robot.drive_train.get_Y(), robot.drive_train.get_A()+ ((Math.PI/180)*4), 1, distance_acc, angle_acc);
         //waitForTime(0.5);
-        robot.shooter.shoot(robot.shooter.getShooterSpped() - 65); // continue to slowly decrase speed of shooter to make sure we are always consistent
+        robot.shooter.shoot(robot.shooter.getShooterSpped() - 80); // continue to slowly decrase speed of shooter to make sure we are always consistent
         //sleep(150);
-        robot.shooter.shoot(robot.shooter.getShooterSpped() - 70);
+        robot.shooter.shoot(robot.shooter.getShooterSpped() - 80);
         //sleep(100);
-        robot.shooter.shoot(robot.shooter.getShooterSpped() - 85);
+        robot.shooter.shoot(robot.shooter.getShooterSpped() - 90);
         robot.shooter.unshoot();
 
         //catchNShhotInitialRings(pattren);
@@ -98,10 +98,11 @@ public class LiveAuto extends LiveTeleopBase {
 
             if(pattren == 3){
                 robot.drive_train.odo_move(-13, -2, Math.PI , 1, distance_acc, angle_acc); // go to shooting position
-                robot.intake.setIntakePower(0); // stop intake
+
                 robot.shooter.shoot(); // shoot hypothetical 3 rings, could also just have 1 or 2 but we are being safe
                 robot.shooter.shoot();
                 robot.shooter.shoot();
+                robot.intake.setIntakePower(0); // stop intake
                 robot.shooter.unshoot(); // stop shooting
             }
 
@@ -143,7 +144,8 @@ public class LiveAuto extends LiveTeleopBase {
         ElapsedTime elapsedtimer = new ElapsedTime();
         robot.intake.setIntakePower(-1);
         if(pattren == 3){
-            robot.drive_train.odo_move(-10, 0, robot.drive_train.get_A() + ((Math.PI/180)*4.5) , 1, distance_acc, angle_acc);
+           // robot.drive_train.odo_move(-10, 0, robot.drive_train.get_A() + ((Math.PI/180)*4.5) , 1, distance_acc, angle_acc);
+            robot.drive_train.odo_move(-12, 0, Math.PI , 1, distance_acc, angle_acc);
             robot.drive_train.odo_move(robot.drive_train.get_X(), -28.0, robot.drive_train.get_A(), 1, distance_acc, angle_acc);
         }else{
             robot.drive_train.odo_move(-8, 0, Math.PI, 1, distance_acc, angle_acc);
@@ -153,8 +155,12 @@ public class LiveAuto extends LiveTeleopBase {
             robot.intake.setIntakePower(-1);
             robot.drive_train.odo_move(robot.drive_train.get_X(), -36.0, robot.drive_train.get_A(), 1, distance_acc, angle_acc);
             if(pattren == 3){
-                sleep(500);
-                robot.drive_train.odo_move(robot.drive_train.get_X() + 1.5, robot.drive_train.get_Y(), robot.drive_train.get_A(), 0.5, distance_acc, angle_acc);
+                //sleep(500);
+                robot.drive_train.odo_move(robot.drive_train.get_X() , robot.drive_train.get_Y()- 1.5, robot.drive_train.get_A(), 0.5, distance_acc, angle_acc);
+                sleep(300);
+                robot.drive_train.odo_move(robot.drive_train.get_X() , robot.drive_train.get_Y()- 1.5, robot.drive_train.get_A(), 0.5, distance_acc, angle_acc);
+                sleep(300);
+                robot.drive_train.odo_move(robot.drive_train.get_X() , robot.drive_train.get_Y()- 1.5, robot.drive_train.get_A(), 0.5, distance_acc, angle_acc);
             }else {
                 robot.drive_train.odo_move(robot.drive_train.get_X(), -37.0, robot.drive_train.get_A(), 0.6, distance_acc, angle_acc, 0, 3);
             }
@@ -180,7 +186,7 @@ public class LiveAuto extends LiveTeleopBase {
                 robot.drive_train.odo_move(-29, 40.0, Math.PI + (Math.PI/2), 1, distance_acc, angle_acc);
                 break;
             case 3:
-                robot.drive_train.odo_move(-24, 36.0, Math.PI, 1, distance_acc, angle_acc);
+                robot.drive_train.odo_move(-24, 36.0, Math.PI - ((Math.PI/180)*5), 1, distance_acc, angle_acc);
                 break;
         }
     }

@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.robots.Robot;
 
 class WobbleConfig {
 
-    public static final double HOLD_WOBBLE_POS = 1.0f;
+    public static final double HOLD_WOBBLE_POS = 0.964f;
     public static final double OPEN_WOBBLE_POS = 0.6f;
 
     public static final double SECOND_WOBBLE_HOLD = 0.8f;
