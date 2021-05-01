@@ -65,7 +65,7 @@ public class LiveAuto extends LiveTeleopBase {
         }
 
         if(pattren == 3) { // seperate shooting positions for 4-ring auto and the other set ups
-            robot.drive_train.odo_move(-13, -2, Math.PI, 1, distance_acc, angle_acc);
+            robot.drive_train.odo_move(-13, -2, Math.PI - ((Math.PI/180)*4), 1, distance_acc, angle_acc);
         } else if (pattren == 2) {
             robot.drive_train.odo_move(-9, 0, Math.PI - ((Math.PI/180)*5), 1, distance_acc, angle_acc); // shooting position for 1-ring auto
         } else {
@@ -102,9 +102,9 @@ public class LiveAuto extends LiveTeleopBase {
             if(pattren == 3){
                 robot.drive_train.odo_move(-13, -2, Math.PI , 1, distance_acc, angle_acc); // go to shooting position
 
-                robot.shooter.shoot(); // shoot hypothetical 3 rings, could also just have 1 or 2 but we are being safe
-                robot.shooter.shoot();
-                robot.shooter.shoot();
+                robot.shooter.shoot(robot.shooter.getShooterSpped() - 95); // shoot hypothetical 3 rings, could also just have 1 or 2 but we are being safe
+                robot.shooter.shoot(robot.shooter.getShooterSpped() - 95);
+                robot.shooter.shoot(robot.shooter.getShooterSpped() - 95);
                 robot.intake.setIntakePower(0); // stop intake
                 robot.shooter.unshoot(); // stop shooting
             }
@@ -191,7 +191,7 @@ public class LiveAuto extends LiveTeleopBase {
                 robot.drive_train.odo_move(-29, 40.0, Math.PI + (Math.PI/2), 1, distance_acc, angle_acc);
                 break;
             case 3:
-                robot.drive_train.odo_move(-24, 36.0, Math.PI - ((Math.PI/180)*5), 1, distance_acc, angle_acc);
+                robot.drive_train.odo_move(-27, 36.0, Math.PI - ((Math.PI/180)*5), 1, distance_acc, angle_acc);
                 break;
         }
     }
