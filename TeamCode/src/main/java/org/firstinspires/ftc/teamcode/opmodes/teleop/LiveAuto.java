@@ -34,13 +34,13 @@ public class LiveAuto extends LiveTeleopBase {
         int pattren = robot.phone_camera.get_pattern();
         robot.phone_camera.stop_streaming();
 
-        SCWobble(pattren);
+        //SCWobble(pattren);
 
         aroundRings(pattren); // move around the starting stack of rings
         gotoRectBasedOnPattren(pattren); //Travel to the correct box for the wobble
 
-        robot.wobble.downWobble(true); // drop the wobble
-        robot.wobble.openWobbleServo(true); // open the servo to let go of wobble
+        //robot.wobble.downWobble(true); // drop the wobble
+        //robot.wobble.openWobbleServo(true); // open the servo to let go of wobble
         //robot.wobble.dropWobble(true);
         if(pattren == 2){
             robot.drive_train.odo_move(robot.drive_train.get_X(), robot.drive_train.get_Y(), robot.drive_train.get_A(), 1, distance_acc, angle_acc);
@@ -50,7 +50,7 @@ public class LiveAuto extends LiveTeleopBase {
 
         //robot.wobble.SecondWobbleDown(true);
         robot.wobble.dropWobble(true);
-        sleep(600);
+        sleep(1000);
         robot.wobble.SecondWobbleOpen(true);
 
         if(pattren == 2){
@@ -67,9 +67,9 @@ public class LiveAuto extends LiveTeleopBase {
         if(pattren == 3) { // seperate shooting positions for 4-ring auto and the other set ups
             robot.drive_train.odo_move(-13, -2, Math.PI - ((Math.PI/180)*4), 1, distance_acc, angle_acc);
         } else if (pattren == 2) {
-            robot.drive_train.odo_move(-9, 0, Math.PI - ((Math.PI/180)*5), 1, distance_acc, angle_acc); // shooting position for 1-ring auto
+            robot.drive_train.odo_move(-12, 0, Math.PI - ((Math.PI/180)*5), 1, distance_acc, angle_acc); // shooting position for 1-ring auto
         } else {
-            robot.drive_train.odo_move(-9, 0, Math.PI, 1, distance_acc, angle_acc);
+            robot.drive_train.odo_move(-10, 0, Math.PI, 1, distance_acc, angle_acc);
         }
 
         //waitForTime(1.0);
@@ -93,7 +93,7 @@ public class LiveAuto extends LiveTeleopBase {
             //rightBeforeLine();
             if(pattren == 2){
                 //shootpos(pattren);
-                robot.drive_train.odo_move(-11, -2, Math.PI - ((Math.PI/180)*5) , 1, distance_acc, angle_acc); // go to shooting position
+                robot.drive_train.odo_move(-12, -2, Math.PI - ((Math.PI/180)*8) , 1, distance_acc, angle_acc); // go to shooting position
                 robot.intake.setIntakePower(0); // stop intake
                 robot.shooter.shoot(robot.shooter.getShooterSpped() - 70); // shoot the 1 ring
                 robot.shooter.unshoot(); // stop shooting
@@ -167,7 +167,7 @@ public class LiveAuto extends LiveTeleopBase {
                 sleep(300);
                 robot.drive_train.odo_move(robot.drive_train.get_X() , robot.drive_train.get_Y()- 1.5, robot.drive_train.get_A(), 0.5, distance_acc, angle_acc);
             }else {
-                robot.drive_train.odo_move(robot.drive_train.get_X(), -37.0, robot.drive_train.get_A(), 0.6, distance_acc, angle_acc, 0, 1.5);
+                robot.drive_train.odo_move(robot.drive_train.get_X(), -37.0, robot.drive_train.get_A(), 0.6, distance_acc, angle_acc, 0, 1);
             }
         //robot.intake.setIntakePower(0);
     }
