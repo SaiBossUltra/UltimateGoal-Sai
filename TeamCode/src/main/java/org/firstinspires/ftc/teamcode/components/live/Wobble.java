@@ -14,8 +14,8 @@ import org.firstinspires.ftc.teamcode.robots.Robot;
 
 class WobbleConfig {
 
-    public static final double HOLD_WOBBLE_POS = 0.964f;
-    public static final double OPEN_WOBBLE_POS = 0.6f;
+    public static final double HOLD_WOBBLE_POS = 0.4f;
+    public static final double OPEN_WOBBLE_POS = 0.0f;
 
     public static final double SECOND_WOBBLE_HOLD = 0.8f;
     public static final double SECOND_WOBBLE_OPEN = 0.0f;
@@ -177,7 +177,7 @@ public class Wobble extends Component {
     }
 
     public void upWobble(boolean wait){
-        wait = Math.abs(lift.getPosition() - WobbleConfig.LIFT_UP_POS) > SERVO_POS_ERROR_BOUNDARY;
+        wait = wait && Math.abs(lift.getPosition() - WobbleConfig.LIFT_UP_POS) > SERVO_POS_ERROR_BOUNDARY;
         lift.setPosition(WobbleConfig.LIFT_UP_POS);
         while(wait && isOpmodeActive() && Math.abs(lift.getPosition() - WobbleConfig.LIFT_UP_POS) > SERVO_POS_ERROR_BOUNDARY) {
             lift.setPosition(WobbleConfig.LIFT_UP_POS);
@@ -185,6 +185,12 @@ public class Wobble extends Component {
         if(wait && useHardWait) {
             waitForTime(hardWaitMills/1000.0);
         }
+    }
+    public void simplewobbleup(){
+        lift.setPosition(WobbleConfig.LIFT_UP_POS);
+    }
+    public void simplemainwobdown(){
+        lift.setPosition(WobbleConfig.LIFT_DOWN_POS);
     }
     public void downWobble(boolean wait){
         wait = wait && Math.abs(lift.getPosition() - WobbleConfig.LIFT_DOWN_POS) > SERVO_POS_ERROR_BOUNDARY;

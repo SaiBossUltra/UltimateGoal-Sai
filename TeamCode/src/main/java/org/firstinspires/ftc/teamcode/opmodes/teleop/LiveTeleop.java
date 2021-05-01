@@ -65,7 +65,7 @@ public class LiveTeleop extends LiveTeleopBase {
         LFDrive.setDirection(DcMotor.Direction.REVERSE);
         LBDrive.setDirection(DcMotor.Direction.REVERSE);
 
-        //wobbleservo.setDirection(Servo.Direction.REVERSE);
+        wobbleservo.setDirection(Servo.Direction.REVERSE);
 
         lift.setDirection(Servo.Direction.REVERSE);
         sideWClaw.setDirection(Servo.Direction.REVERSE);
@@ -149,9 +149,9 @@ public class LiveTeleop extends LiveTeleopBase {
 
 
         if(gamepad2.left_bumper){
-            wobbleservo.setPosition(0.6f);
+            wobbleservo.setPosition(0.0f);
         } else { // will always be closed and will open as long as bumper is pressed
-            wobbleservo.setPosition(0.96f);
+            wobbleservo.setPosition(0.4f);
         }
 
         if(gamepad2.dpad_up) {
